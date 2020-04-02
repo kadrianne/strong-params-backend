@@ -15,20 +15,23 @@ class UsersController < ApplicationController
         if @user.save
             render json: @user
         else
-            render status: 418
+            render json: @user.errors.messages
         end
     end
 
     def update
         @user = User.find(params[:id])
-        @user.update(user_params)
-        render json: @user
+        if @user.update(user_params)
+            render json: @user
+        else
+            render json: @user.errors.messages
+        end
     end
 
     def destroy
         @user = User.find(params[:id])
         @user.destroy
-        render message: 'User has been deleted.'
+        redirect_to action: "index"
     end
 
     private
