@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     def update
         @user = User.find(params[:id])
         if @user.update(user_params)
-            render json: @user
+            render json: {message: "User successfully updated!", user: @user} 
         else
             render json: @user.errors.messages
         end
@@ -31,7 +31,8 @@ class UsersController < ApplicationController
     def destroy
         @user = User.find(params[:id])
         @user.destroy
-        redirect_to action: "index"
+        
+        render json: {message: "User successfully deleted!"}
     end
 
     private
